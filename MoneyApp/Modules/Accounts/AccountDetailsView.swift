@@ -5,6 +5,10 @@ struct AccountDetailsView: View {
     @State private var isAddingNewTransaction = false
     private let account: Account
     
+    private var sortedTransactions: [Transaction] {
+        account.transactions.sorted(by: { $0.createdAt > $1.createdAt })
+    }
+    
     init(_ account: Account) {
         self.account = account
     }
@@ -12,7 +16,7 @@ struct AccountDetailsView: View {
     var body: some View {
         List {
             
-            ForEach(account.transactions) { transaction in
+            ForEach(sortedTransactions) { transaction in
                 transactionRow(transaction)
             }
         }
